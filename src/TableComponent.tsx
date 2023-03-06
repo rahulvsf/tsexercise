@@ -35,6 +35,26 @@ function TableComponent() {
     setLoadData(true);
   }
 
+  function renderRow(user: UserData) {
+    return (
+      <TableRow key={user.mname}>
+        <TableCell component="th" scope="row">
+          {user.fname}
+        </TableCell>
+        <TableCell>{user.mname}</TableCell>
+        <TableCell>{user.lname}</TableCell>
+        <TableCell>{user.email}</TableCell>
+        <TableCell>{user.phone}</TableCell>
+        <TableCell>
+          <Button variant="outlined">Edit</Button>
+          <Button sx={{ ml: 1 }} variant="outlined" color="error">
+            Delete
+          </Button>
+        </TableCell>
+      </TableRow>
+    );
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -46,23 +66,11 @@ function TableComponent() {
               <TableCell>Last Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Phone</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {userData.map((user: UserData) => (
-              <TableRow
-                key={user.mname}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {user.fname}
-                </TableCell>
-                <TableCell>{user.mname}</TableCell>
-                <TableCell>{user.lname}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.phone}</TableCell>
-              </TableRow>
-            ))}
+            {userData.map((user: UserData) => renderRow(user))}
           </TableBody>
         </Table>
       </TableContainer>
