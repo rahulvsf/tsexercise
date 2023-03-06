@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import * as jsonData from "../data.json";
-import { Button } from "@mui/material";
+import { Button, Input } from "@mui/material";
 
 interface UserData {
   fname: string;
@@ -39,9 +39,7 @@ function TableComponent() {
 
   function handleLoadClick() {
     setLoadData(true);
-    if (userData.length != jsonData.data.length) {
-      setUserData(attachEditProp(jsonData.data));
-    }
+    setUserData(attachEditProp(jsonData.data));
   }
 
   function handleDelete(mname: string) {
@@ -60,7 +58,7 @@ function TableComponent() {
     setUserData(users);
   }
 
-  function renderActionsButtons(user: UserData) {
+  function renderActionsButtons(user: UserData): JSX.Element {
     if (!user.edit) {
       return (
         <>
@@ -111,16 +109,43 @@ function TableComponent() {
     }
   }
 
+  function editableCell(value: string, name: string, user: UserData) {
+    return (
+      <Input
+        value={value}
+        name={name}
+        onChange={(e) => {
+          const val = e.target.value;
+          const updatedUsers = userData.map((mappedUser: UserData) => {
+            if (mappedUser.mname == user.mname) {
+              return { ...user, [name]: val };
+            }
+            return mappedUser;
+          });
+          setUserData(updatedUsers);
+        }}
+      />
+    );
+  }
+
   function renderRow(user: UserData) {
     return (
       <TableRow key={user.mname}>
         <TableCell component="th" scope="row">
-          {user.fname}
+          {user.edit ? editableCell(user.fname, "fname", user) : user.fname}
         </TableCell>
-        <TableCell>{user.mname}</TableCell>
-        <TableCell>{user.lname}</TableCell>
-        <TableCell>{user.email}</TableCell>
-        <TableCell>{user.phone}</TableCell>
+        <TableCell>
+          {user.edit ? editableCell(user.mname, "mname", user) : user.mname}
+        </TableCell>
+        <TableCell>
+          {user.edit ? editableCell(user.lname, "lname", user) : user.lname}
+        </TableCell>
+        <TableCell>
+          {user.edit ? editableCell(user.email, "email", user) : user.email}
+        </TableCell>
+        <TableCell>
+          {user.edit ? editableCell(user.phone, "phone", user) : user.phone}
+        </TableCell>
         <TableCell>{renderActionsButtons(user)}</TableCell>
       </TableRow>
     );
