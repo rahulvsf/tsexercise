@@ -52,18 +52,26 @@ function TableComponent() {
     setUserData(users);
   }
 
-  function renderRow(user: UserData) {
-    return (
-      <TableRow key={user.mname}>
-        <TableCell component="th" scope="row">
-          {user.fname}
-        </TableCell>
-        <TableCell>{user.mname}</TableCell>
-        <TableCell>{user.lname}</TableCell>
-        <TableCell>{user.email}</TableCell>
-        <TableCell>{user.phone}</TableCell>
-        <TableCell>
-          <Button variant="outlined">Edit</Button>
+  function handleEdit(mname: string, edit: boolean) {
+    let users = [...userData];
+    users.forEach((u: UserData) => {
+      if (u.mname == mname) u.edit = edit;
+    });
+    setUserData(users);
+  }
+
+  function renderActionsButtons(user: UserData) {
+    if (!user.edit) {
+      return (
+        <>
+          <Button
+            onClick={() => {
+              handleEdit(user.mname, true);
+            }}
+            variant="outlined"
+          >
+            Edit
+          </Button>
           <Button
             onClick={() => {
               handleDelete(user.mname);
@@ -74,7 +82,46 @@ function TableComponent() {
           >
             Delete
           </Button>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Button
+            onClick={() => {
+              //   handleEdit(user.mname);
+            }}
+            variant="outlined"
+            color="success"
+          >
+            Save
+          </Button>
+          <Button
+            onClick={() => {
+              handleEdit(user.mname, false);
+            }}
+            sx={{ ml: 1 }}
+            variant="outlined"
+            color="error"
+          >
+            Cancel
+          </Button>
+        </>
+      );
+    }
+  }
+
+  function renderRow(user: UserData) {
+    return (
+      <TableRow key={user.mname}>
+        <TableCell component="th" scope="row">
+          {user.fname}
         </TableCell>
+        <TableCell>{user.mname}</TableCell>
+        <TableCell>{user.lname}</TableCell>
+        <TableCell>{user.email}</TableCell>
+        <TableCell>{user.phone}</TableCell>
+        <TableCell>{renderActionsButtons(user)}</TableCell>
       </TableRow>
     );
   }
