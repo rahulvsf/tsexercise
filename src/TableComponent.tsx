@@ -25,6 +25,18 @@ interface UserData {
 function TableComponent() {
   const [userData, setUserData] = useState<UserData[]>([]);
   const [loadData, setLoadData] = useState<boolean>(false);
+  const [previousUserState, setUserPreviousState] = useState<UserData>({
+    fname: "",
+    mname: "",
+    lname: "",
+    email: "",
+    phone: "",
+    role: "",
+    address: "",
+    created: "",
+    modified: "",
+    edit: false,
+  });
 
   useEffect(() => {
     if (loadData) {
@@ -58,6 +70,18 @@ function TableComponent() {
     setUserData(users);
   }
 
+  function handleCancel(mname: string) {
+    let updatedUsers = userData.map((user: UserData) => {
+      if (mname == user.mname) {
+        if (previousUserState["mname"] != "")
+          return { ...previousUserState, edit: false };
+      }
+      return user;
+    });
+    console.log(updatedUsers);
+    setUserData(updatedUsers);
+  }
+
   function renderActionsButtons(user: UserData): JSX.Element {
     if (!user.edit) {
       return (
@@ -87,7 +111,7 @@ function TableComponent() {
         <>
           <Button
             onClick={() => {
-              //   handleEdit(user.mname);
+              handleEdit(user.mname, false);
             }}
             variant="outlined"
             color="success"
@@ -96,7 +120,7 @@ function TableComponent() {
           </Button>
           <Button
             onClick={() => {
-              handleEdit(user.mname, false);
+              handleCancel(user.mname);
             }}
             sx={{ ml: 1 }}
             variant="outlined"
@@ -115,6 +139,9 @@ function TableComponent() {
         value={value}
         name={name}
         onChange={(e) => {
+          if (previousUserState["mname"] == "") {
+            setUserPreviousState(user);
+          }
           const val = e.target.value;
           const updatedUsers = userData.map((mappedUser: UserData) => {
             if (mappedUser.mname == user.mname) {
