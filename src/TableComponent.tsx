@@ -8,19 +8,7 @@ import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import * as jsonData from "../data.json";
 import { Button, Input } from "@mui/material";
-
-interface UserData {
-  fname: string;
-  mname: string;
-  lname: string;
-  email: string;
-  phone: string;
-  role: string;
-  address: string;
-  created: string;
-  modified: string;
-  edit?: boolean;
-}
+import { UserData } from "./tsfile";
 
 function TableComponent() {
   const [userData, setUserData] = useState<UserData[]>([]);

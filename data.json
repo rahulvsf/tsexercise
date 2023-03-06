@@ -6,7 +6,7 @@
       "lname": "doe",
       "email": "john@anonymous.com",
       "phone": "123456789",
-      "role": "user",
+      "role": "superadmin",
       "address": "No 12, 123 street",
       "created": "12/12/2022",
       "modified": "13/12/2022"
@@ -17,7 +17,7 @@
       "lname": "rester",
       "email": "rester@anonymous.com",
       "phone": "1234534389",
-      "role": "user",
+      "role": "admin",
       "address": "No 12, 124 street",
       "created": "12/12/2022",
       "modified": "13/12/2022"
