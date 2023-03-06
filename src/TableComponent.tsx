@@ -19,6 +19,7 @@ interface UserData {
   address: string;
   created: string;
   modified: string;
+  edit?: boolean;
 }
 
 function TableComponent() {
@@ -27,14 +28,19 @@ function TableComponent() {
 
   useEffect(() => {
     if (loadData) {
-      setUserData(jsonData.data);
+      setUserData(attachEditProp(jsonData.data));
     }
   }, [loadData]);
+
+  function attachEditProp(arr: UserData[]): UserData[] {
+    arr.forEach((u: UserData) => (u.edit = false));
+    return arr;
+  }
 
   function handleLoadClick() {
     setLoadData(true);
     if (userData.length != jsonData.data.length) {
-      setUserData(jsonData.data);
+      setUserData(attachEditProp(jsonData.data));
     }
   }
 
