@@ -33,6 +33,17 @@ function TableComponent() {
 
   function handleLoadClick() {
     setLoadData(true);
+    if (userData.length != jsonData.data.length) {
+      setUserData(jsonData.data);
+    }
+  }
+
+  function handleDelete(mname: string) {
+    let users = [...userData];
+    users = users.filter((u: UserData) => {
+      return u.mname != mname;
+    });
+    setUserData(users);
   }
 
   function renderRow(user: UserData) {
@@ -47,7 +58,14 @@ function TableComponent() {
         <TableCell>{user.phone}</TableCell>
         <TableCell>
           <Button variant="outlined">Edit</Button>
-          <Button sx={{ ml: 1 }} variant="outlined" color="error">
+          <Button
+            onClick={() => {
+              handleDelete(user.mname);
+            }}
+            sx={{ ml: 1 }}
+            variant="outlined"
+            color="error"
+          >
             Delete
           </Button>
         </TableCell>
