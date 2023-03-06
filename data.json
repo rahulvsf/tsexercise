@@ -10,6 +10,17 @@
       "address": "No 12, 123 street",
       "created": "12/12/2022",
       "modified": "13/12/2022"
+    },
+    {
+      "fname": "dunkirk",
+      "mname": "lolli",
+      "lname": "rester",
+      "email": "rester@anonymous.com",
+      "phone": "1234534389",
+      "role": "user",
+      "address": "No 12, 124 street",
+      "created": "12/12/2022",
+      "modified": "13/12/2022"
     }
   ]
 }

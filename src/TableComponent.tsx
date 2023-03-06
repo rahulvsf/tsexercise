@@ -7,31 +7,33 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import * as jsonData from "../data.json";
+import { Button } from "@mui/material";
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
+interface UserData {
+  fname: string;
+  mname: string;
+  lname: string;
+  email: string;
+  phone: string;
+  role: string;
+  address: string;
+  created: string;
+  modified: string;
 }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 function TableComponent() {
+  const [userData, setUserData] = useState<UserData[]>([]);
   const [loadData, setLoadData] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(jsonData.data);
-  }, []);
+    if (loadData) {
+      setUserData(jsonData.data);
+    }
+  }, [loadData]);
+
+  function handleLoadClick() {
+    setLoadData(true);
+  }
 
   return (
     <>
@@ -39,31 +41,34 @@ function TableComponent() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell>Calories</TableCell>
-              <TableCell>Fat&nbsp;(g)</TableCell>
-              <TableCell>Carbs&nbsp;(g)</TableCell>
-              <TableCell>Protein&nbsp;(g)</TableCell>
+              <TableCell>First Name</TableCell>
+              <TableCell>Middle Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phone</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {userData.map((user: UserData) => (
               <TableRow
-                key={row.name}
+                key={user.mname}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {user.fname}
                 </TableCell>
-                <TableCell>{row.calories}</TableCell>
-                <TableCell>{row.fat}</TableCell>
-                <TableCell>{row.carbs}</TableCell>
-                <TableCell>{row.protein}</TableCell>
+                <TableCell>{user.mname}</TableCell>
+                <TableCell>{user.lname}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.phone}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <Button onClick={handleLoadClick} sx={{ mt: 4 }} variant="contained">
+        {loadData ? "Refresh" : "Load"} Data
+      </Button>
     </>
   );
 }
