@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "fname": "john",
+      "mname": "james",
+      "lname": "doe",
+      "email": "john@anonymous.com",
+      "phone": "123456789",
+      "role": "user",
+      "address": "No 12, 123 street",
+      "created": "12/12/2022",
+      "modified": "13/12/2022"
+    }
+  ]
+}
