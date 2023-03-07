@@ -1,11 +1,7 @@
 import { UserData } from "./tsfile";
 
-// property decorator
-const prettyDate = (
-  target: any,
-  propertyKey: string,
-  descriptor: PropertyDescriptor
-) => {
+// method decorator
+const prettyDate = (target: Object, propertyKey: string, descriptor: any) => {
   const originalMethod = descriptor.value;
 
   descriptor.value = function (...args: any[]) {
@@ -18,22 +14,25 @@ const prettyDate = (
 };
 
 export class UserOperations {
-  private _user;
+  private _user: UserData;
   constructor(user: UserData) {
     this._user = user;
+    this._user.edit = false;
   }
 
-  static attachEditProperty(userObjects: UserData[]) {
-    const editPropertyAttachedUsers = userObjects.map(
-      (singleUser: UserData) => {
-        singleUser.edit = false;
-        return singleUser;
-      }
-    );
-    return editPropertyAttachedUsers;
+  static createUsersArray(usersArray: any[]): UserData[] {
+    let returnedArray: UserData[] = [];
+    if (usersArray.length > 0) {
+      usersArray.forEach((eachUser: any) => {
+        const x = new UserOperations(eachUser);
+        returnedArray.push(x.formattedUser());
+      });
+    }
+    return returnedArray;
   }
 
-  logUser() {
-    console.log(this._user);
+  @prettyDate
+  formattedUser() {
+    return this._user;
   }
 }

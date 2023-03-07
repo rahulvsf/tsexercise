@@ -30,23 +30,13 @@ function TableComponent() {
 
   useEffect(() => {
     if (loadData) {
-      setUserData(attachEditProp(jsonData.data));
+      setUserData(UserOperations.createUsersArray(jsonData.data));
     }
   }, [loadData]);
 
-  function attachEditProp(arr: UserData[]): UserData[] {
-    return UserOperations.attachEditProperty(arr);
-    // arr.forEach((u: UserData) => {
-    //   u.edit = false;
-    //   const x = new UserOperations(u);
-    //   x.logUser();
-    // });
-    // return arr;
-  }
-
   function handleLoadClick() {
     setLoadData(true);
-    setUserData(attachEditProp(jsonData.data));
+    setUserData(UserOperations.createUsersArray(jsonData.data));
   }
 
   function handleDelete(mname: string) {
