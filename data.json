@@ -8,8 +8,8 @@
       "phone": "123456789",
       "role": "superadmin",
       "address": "No 12, 123 street",
-      "created": "12/12/2022",
-      "modified": "13/12/2022"
+      "created": "2022-12-12",
+      "modified": "2022-12-13"
     },
     {
       "fname": "dunkirk",
@@ -19,8 +19,8 @@
       "phone": "1234534389",
       "role": "admin",
       "address": "No 12, 124 street",
-      "created": "12/12/2022",
-      "modified": "13/12/2022"
+      "created": "2022-12-12",
+      "modified": "2022-12-13"
     }
   ]
 }

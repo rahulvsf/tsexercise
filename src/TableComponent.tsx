@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import * as jsonData from "../data.json";
 import { Button, Input } from "@mui/material";
 import { BeautifyData, UserData } from "./tsfile";
+import { UserOperations } from "./crud";
 
 function TableComponent() {
   const [userData, setUserData] = useState<UserData[]>([]);
@@ -23,6 +24,7 @@ function TableComponent() {
     address: "",
     created: "",
     modified: "",
+    formatedDate: "",
     edit: false,
   });
 
@@ -33,9 +35,11 @@ function TableComponent() {
   }, [loadData]);
 
   function attachEditProp(arr: UserData[]): UserData[] {
-    const x = new BeautifyData();
-    x.makeSomeDate();
-    arr.forEach((u: UserData) => (u.edit = false));
+    arr.forEach((u: UserData) => {
+      u.edit = false;
+      const x = new UserOperations(u);
+      x.logUser();
+    });
     return arr;
   }
 
@@ -68,7 +72,6 @@ function TableComponent() {
       }
       return user;
     });
-    console.log(updatedUsers);
     setUserData(updatedUsers);
   }
 
@@ -152,9 +155,6 @@ function TableComponent() {
           {user.edit ? editableCell(user.fname, "fname", user) : user.fname}
         </TableCell>
         <TableCell>
-          {user.edit ? editableCell(user.mname, "mname", user) : user.mname}
-        </TableCell>
-        <TableCell>
           {user.edit ? editableCell(user.lname, "lname", user) : user.lname}
         </TableCell>
         <TableCell>
@@ -163,6 +163,7 @@ function TableComponent() {
         <TableCell>
           {user.edit ? editableCell(user.phone, "phone", user) : user.phone}
         </TableCell>
+        <TableCell>{user.formatedDate}</TableCell>
         <TableCell>{renderActionsButtons(user)}</TableCell>
       </TableRow>
     );
@@ -175,10 +176,10 @@ function TableComponent() {
           <TableHead>
             <TableRow>
               <TableCell>First Name</TableCell>
-              <TableCell>Middle Name</TableCell>
               <TableCell>Last Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Phone</TableCell>
+              <TableCell>Created</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>

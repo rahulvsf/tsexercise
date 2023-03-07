@@ -9,6 +9,7 @@ export interface UserData {
   created: string;
   modified: string;
   edit?: boolean;
+  formatedDate?: string;
 }
 
 export enum Role {
