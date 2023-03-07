@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import * as jsonData from "../data.json";
 import { Button, Input } from "@mui/material";
-import { UserData } from "./tsfile";
+import { BeautifyData, UserData } from "./tsfile";
 
 function TableComponent() {
   const [userData, setUserData] = useState<UserData[]>([]);
@@ -33,6 +33,8 @@ function TableComponent() {
   }, [loadData]);
 
   function attachEditProp(arr: UserData[]): UserData[] {
+    const x = new BeautifyData();
+    x.makeSomeDate();
     arr.forEach((u: UserData) => (u.edit = false));
     return arr;
   }

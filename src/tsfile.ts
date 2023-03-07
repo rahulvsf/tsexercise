@@ -16,3 +16,23 @@ export enum Role {
   Admin = "admin",
   Subscriber = "subscriber",
 }
+
+function prettifyDate(type: string) {
+  return (
+    target: any,
+    memberName: string,
+    propertyDescriptor: PropertyDescriptor
+  ) => {
+    console.log(type);
+    console.log(target);
+    console.log(memberName);
+    console.log(propertyDescriptor);
+  };
+}
+
+export class BeautifyData {
+  @prettifyDate("date")
+  makeSomeDate() {
+    console.log("WOHOO");
+  }
+}
