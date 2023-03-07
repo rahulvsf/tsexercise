@@ -35,12 +35,13 @@ function TableComponent() {
   }, [loadData]);
 
   function attachEditProp(arr: UserData[]): UserData[] {
-    arr.forEach((u: UserData) => {
-      u.edit = false;
-      const x = new UserOperations(u);
-      x.logUser();
-    });
-    return arr;
+    return UserOperations.attachEditProperty(arr);
+    // arr.forEach((u: UserData) => {
+    //   u.edit = false;
+    //   const x = new UserOperations(u);
+    //   x.logUser();
+    // });
+    // return arr;
   }
 
   function handleLoadClick() {

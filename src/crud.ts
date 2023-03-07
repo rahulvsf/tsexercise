@@ -1,6 +1,6 @@
 import { UserData } from "./tsfile";
 
-// method decorator
+// property decorator
 const prettyDate = (
   target: any,
   propertyKey: string,
@@ -23,7 +23,16 @@ export class UserOperations {
     this._user = user;
   }
 
-  @prettyDate
+  static attachEditProperty(userObjects: UserData[]) {
+    const editPropertyAttachedUsers = userObjects.map(
+      (singleUser: UserData) => {
+        singleUser.edit = false;
+        return singleUser;
+      }
+    );
+    return editPropertyAttachedUsers;
+  }
+
   logUser() {
     console.log(this._user);
   }
