@@ -49,7 +49,7 @@ export class UserOperations {
     return this._user;
   }
 
-  replaceWithNewObject(userDataArray: UserData[]){
+  replaceWithNewObject(userDataArray: UserData[]) {
     const index = returnIndex(userDataArray, this._user);
     if (index != -1) {
       userDataArray[index] = this._user;
@@ -57,9 +57,9 @@ export class UserOperations {
     return userDataArray;
   }
 
-  deleteUser(userDataArray: UserData[]){
+  deleteUser(userDataArray: UserData[]) {
     const index = returnIndex(userDataArray, this._user);
-    if(index != -1){
+    if (index != -1) {
       userDataArray.splice(index, 1);
     }
     return userDataArray;

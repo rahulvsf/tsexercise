@@ -51,15 +51,22 @@ function TableComponent() {
     setUserData([...y]);
   }
 
-  function handleCancel(mname: string) {
-    let updatedUsers = userData.map((user: UserData) => {
-      if (mname == user.mname) {
-        if (previousUserState["mname"] != "")
-          return { ...previousUserState, edit: false };
-      }
-      return user;
-    });
-    setUserData(updatedUsers);
+  function handleCancel(user: UserData) {
+    // user: this is edited user
+    let x: UserOperations;
+
+    // check for previous state
+    // unedited
+    if (previousUserState["mname"] != "") {
+      x = new UserOperations(previousUserState, false);
+    }
+    // something was edited, replace with previous state
+    else {
+      x = new UserOperations(user, false);
+    }
+    const y = x.replaceWithNewObject(userData);
+    setUserData([...y]);
+
   }
 
   function renderActionsButtons(user: UserData): JSX.Element {
@@ -100,7 +107,7 @@ function TableComponent() {
           </Button>
           <Button
             onClick={() => {
-              handleCancel(user.mname);
+              handleCancel(user);
             }}
             sx={{ ml: 1 }}
             variant="outlined"
