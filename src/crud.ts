@@ -13,19 +13,6 @@ const prettyDate = (target: Object, propertyKey: string, descriptor: any) => {
   return descriptor;
 };
 
-function editProperty(editable: boolean) {
-  return (target: any, propertyKey: string, descriptor: any) => {
-    const originalMethod = descriptor.value;
-
-    descriptor.value = function (...args: any[]) {
-      this._user.edit = editable;
-      return originalMethod.apply(this, args);
-    };
-
-    return descriptor;
-  };
-}
-
 export class UserOperations {
   private _user;
   constructor(user: UserData, editable: boolean = false) {
