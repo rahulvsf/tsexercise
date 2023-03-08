@@ -1,7 +1,5 @@
 import { UserData } from "./tsfile";
 
-// testing linux
-
 // method decorator
 const prettyDate = (target: Object, propertyKey: string, descriptor: any) => {
   const originalMethod = descriptor.value;
@@ -15,8 +13,21 @@ const prettyDate = (target: Object, propertyKey: string, descriptor: any) => {
   return descriptor;
 };
 
+function editProperty(editable: boolean) {
+  return (target: any, propertyKey: string, descriptor: any) => {
+    const originalMethod = descriptor.value;
+
+    descriptor.value = function (...args: any[]) {
+      this._user.edit = editable;
+      return originalMethod.apply(this, args);
+    };
+
+    return descriptor;
+  };
+}
+
 export class UserOperations {
-  private _user: UserData;
+  private _user;
   constructor(user: UserData) {
     this._user = user;
     this._user.edit = false;
@@ -37,4 +48,27 @@ export class UserOperations {
   formattedUser() {
     return this._user;
   }
+
+  @editProperty(true)
+  makeEditable(userDataArray: UserData[]) {
+    const index = returnIndex(userDataArray, this._user);
+    if (index != -1) {
+      userDataArray[index] = this._user;
+    }
+    return userDataArray;
+  }
+
+  @editProperty(false)
+  makeEditFalse(userDataArray: UserData[]) {
+    const index = returnIndex(userDataArray, this._user);
+    if (index != -1) {
+      userDataArray[index] = this._user;
+    }
+    return userDataArray;
+  }
+}
+
+function returnIndex(arr: UserData[], user: UserData): number {
+  const index = arr.findIndex((u: UserData) => u.mname == user.mname);
+  return index;
 }

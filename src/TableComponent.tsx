@@ -47,12 +47,15 @@ function TableComponent() {
     setUserData(users);
   }
 
-  function handleEdit(mname: string, edit: boolean) {
-    let users = [...userData];
-    users.forEach((u: UserData) => {
-      if (u.mname == mname) u.edit = edit;
-    });
-    setUserData(users);
+  function newEdit(user: UserData, edit: boolean) {
+    const x = new UserOperations(user);
+    let y: UserData[];
+    if (edit) {
+      y = x.makeEditable(userData);
+    } else {
+      y = x.makeEditFalse(userData);
+    }
+    setUserData([...y]);
   }
 
   function handleCancel(mname: string) {
@@ -72,7 +75,7 @@ function TableComponent() {
         <>
           <Button
             onClick={() => {
-              handleEdit(user.mname, true);
+              newEdit(user, true);
             }}
             variant="outlined"
           >
@@ -95,7 +98,7 @@ function TableComponent() {
         <>
           <Button
             onClick={() => {
-              handleEdit(user.mname, false);
+              newEdit(user, false);
             }}
             variant="outlined"
             color="success"
@@ -140,6 +143,7 @@ function TableComponent() {
   }
 
   function renderRow(user: UserData) {
+    console.log(user);
     return (
       <TableRow key={user.mname}>
         <TableCell component="th" scope="row">
