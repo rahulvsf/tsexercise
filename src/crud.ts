@@ -28,9 +28,9 @@ function editProperty(editable: boolean) {
 
 export class UserOperations {
   private _user;
-  constructor(user: UserData) {
+  constructor(user: UserData, editable: boolean = false) {
     this._user = user;
-    this._user.edit = false;
+    this._user.edit = editable;
   }
 
   static createUsersArray(usersArray: any[]): UserData[] {
@@ -49,8 +49,7 @@ export class UserOperations {
     return this._user;
   }
 
-  @editProperty(true)
-  makeEditable(userDataArray: UserData[]) {
+  replaceWithNewObject(userDataArray: UserData[]){
     const index = returnIndex(userDataArray, this._user);
     if (index != -1) {
       userDataArray[index] = this._user;
@@ -58,11 +57,10 @@ export class UserOperations {
     return userDataArray;
   }
 
-  @editProperty(false)
-  makeEditFalse(userDataArray: UserData[]) {
+  deleteUser(userDataArray: UserData[]){
     const index = returnIndex(userDataArray, this._user);
-    if (index != -1) {
-      userDataArray[index] = this._user;
+    if(index != -1){
+      userDataArray.splice(index, 1);
     }
     return userDataArray;
   }

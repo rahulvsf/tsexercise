@@ -39,22 +39,15 @@ function TableComponent() {
     setUserData(UserOperations.createUsersArray(jsonData.data));
   }
 
-  function handleDelete(mname: string) {
-    let users = [...userData];
-    users = users.filter((u: UserData) => {
-      return u.mname != mname;
-    });
-    setUserData(users);
+  function handleDelete(user: UserData) {
+    const x = new UserOperations(user);
+    const y = x.deleteUser(userData);
+    setUserData([...y]);
   }
 
   function newEdit(user: UserData, edit: boolean) {
-    const x = new UserOperations(user);
-    let y: UserData[];
-    if (edit) {
-      y = x.makeEditable(userData);
-    } else {
-      y = x.makeEditFalse(userData);
-    }
+    const x = new UserOperations(user, edit);
+    const y = x.replaceWithNewObject(userData);
     setUserData([...y]);
   }
 
@@ -83,7 +76,7 @@ function TableComponent() {
           </Button>
           <Button
             onClick={() => {
-              handleDelete(user.mname);
+              handleDelete(user);
             }}
             sx={{ ml: 1 }}
             variant="outlined"
@@ -143,7 +136,6 @@ function TableComponent() {
   }
 
   function renderRow(user: UserData) {
-    console.log(user);
     return (
       <TableRow key={user.mname}>
         <TableCell component="th" scope="row">
