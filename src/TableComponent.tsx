@@ -45,7 +45,12 @@ function TableComponent() {
     setUserData([...y]);
   }
 
-  function newEdit(user: UserData, edit: boolean) {
+  function newEdit(user: UserData, edit: boolean, isSave: boolean =false) {
+
+    if(isSave){
+      setUserPreviousState(user);
+    }
+
     const x = new UserOperations(user, edit);
     const y = x.replaceWithNewObject(userData);
     setUserData([...y]);
@@ -98,7 +103,7 @@ function TableComponent() {
         <>
           <Button
             onClick={() => {
-              newEdit(user, false);
+              newEdit(user, false, true);
             }}
             variant="outlined"
             color="success"
